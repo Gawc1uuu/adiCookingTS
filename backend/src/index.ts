@@ -25,3 +25,6 @@ app.use(cors());
 
 //routes
 app.use("/api/recipes", recipeRoutes);
+app.get("*", (req: Request, res: Response) => {
+  res.status(404).json({ msg: "Not found" });
+});

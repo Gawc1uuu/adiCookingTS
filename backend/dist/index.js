@@ -23,3 +23,6 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 //routes
 app.use("/api/recipes", recipeRoutes_1.default);
+app.get("*", (req, res) => {
+    res.status(404).json({ msg: "Not found" });
+});
