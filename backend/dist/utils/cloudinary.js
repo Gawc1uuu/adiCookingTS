@@ -12,4 +12,5 @@ const config = {
     api_secret: process.env.API_SECRET,
 };
 const cloudinaryInstance = cloudinary_1.default.v2;
+cloudinaryInstance.config(config);
 exports.default = cloudinaryInstance;

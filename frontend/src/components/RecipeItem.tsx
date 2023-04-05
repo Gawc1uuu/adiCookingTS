@@ -1,5 +1,4 @@
 import recipe from "../interfaces/recipe";
-import food from "../assets/food.jpg";
 
 interface RecipeItemProps {
   data: recipe;
@@ -10,8 +9,8 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
     <div className=" bg-slate-200 rounded-lg shadow px-6 py-4 pb-10 space-y-4 transition hover:-translate-y-1 w-[90%] md:w-[330px] h-[500px]">
       <div className="h-1/2 w-full">
         <img
-          src={food.toString()}
-          alt="spaghetti"
+          src={data.image.url}
+          alt="food"
           className="h-full w-full rounded-lg"
         />
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios, { AxiosError } from "axios";
 import plus from "../assets/plus.png";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
@@ -38,7 +39,7 @@ const RecipeForm = () => {
     }
   };
 
-  const submitHandler = (event: React.FormEvent) => {
+  const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     const newRecipe = {
       title,
@@ -47,6 +48,16 @@ const RecipeForm = () => {
       cookingTime,
       image: selectedFile,
     };
+    console.log(newRecipe);
+    try {
+      const response = await axios.post("http://localhost:4000/api/recipes", {
+        ...newRecipe,
+      });
+      console.log("Success", response.data);
+    } catch (error) {
+      console.log("ERRor", (error as AxiosError).response?.data);
+    }
+
     console.log(newRecipe);
     setTitle("");
     setCookingTime("");

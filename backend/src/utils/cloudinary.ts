@@ -15,4 +15,5 @@ const config: CloudinaryConfig = {
 };
 
 const cloudinaryInstance = cloudinary.v2;
+cloudinaryInstance.config(config);
 export default cloudinaryInstance;

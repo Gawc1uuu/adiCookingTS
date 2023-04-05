@@ -19,8 +19,9 @@ mongoose_1.default
     console.log(e.message);
 });
 //middleware
-app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+app.use(express_1.default.json({ limit: "50mb" }));
+app.use(express_1.default.urlencoded({ limit: "50mb", extended: true }));
 //routes
 app.use("/api/recipes", recipeRoutes_1.default);
 app.get("*", (req, res) => {
