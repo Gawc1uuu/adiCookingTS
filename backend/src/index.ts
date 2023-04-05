@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from "express";
-import cors from "cors";
 import mongoose, { MongooseError } from "mongoose";
-const app = express();
 import recipeRoutes from "./routes/recipeRoutes";
+import cors from "cors";
+const app = express();
 
 // connecting to db
 mongoose.set("strictQuery", false);

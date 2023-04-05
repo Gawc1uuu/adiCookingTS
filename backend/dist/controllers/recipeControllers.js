@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateRecipe = exports.deleteRecipe = exports.getRecipe = exports.getRecipes = exports.createRecipe = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
 const recipeModel_1 = __importDefault(require("../models/recipeModel"));
 // get all recipes
 const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,9 +37,24 @@ const getRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getRecipe = getRecipe;
 //create new recipe
 const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, method, cookingTime } = req.body;
+    const { title, method, ingredients, cookingTime, image } = req.body;
     try {
-        const recipe = yield recipeModel_1.default.create({ title, method, cookingTime });
+        const result = yield cloudinary_1.default.uploader.upload(image, {
+            folder: "recipes",
+            quality: 80,
+            width: 500,
+            heigth: 500,
+        });
+        const recipe = yield recipeModel_1.default.create({
+            title,
+            method,
+            ingredients,
+            cookingTime,
+            image: {
+                public_id: result.public_id,
+                url: result.secure_url,
+            },
+        });
         res.status(200).json(recipe);
     }
     catch (error) {

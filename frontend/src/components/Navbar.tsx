@@ -28,14 +28,14 @@ const Navbar = () => {
           </div>
 
           <div className="items-center space-x-12 hidden lg:flex">
-            <Link to="/login" className="hover:underline">
+            {/* <Link to="/login" className="hover:underline">
               Login
             </Link>
             <Link to="/signup">
               <button className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90">
                 Sign up
               </button>
-            </Link>
+            </Link> */}
             <Link to="/logout">
               <button className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90">
                 Logout

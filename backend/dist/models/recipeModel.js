@@ -10,8 +10,22 @@ const recipeSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    ingredients: {
+        type: [String],
+        required: true,
+    },
     cookingTime: {
         type: Number,
+    },
+    image: {
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        },
     },
 }, { timestamps: true });
 const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);

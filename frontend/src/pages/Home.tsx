@@ -31,7 +31,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className=" mx-2">
+    <div className="mx-2">
       <div className="container mx-auto w-full my-16 flex flex-col items-center justify-between space-y-8 md:space-y-0 md:flex-row md:flex-wrap md:max-w-6xl md:gap-6">
         {recipes.length > 0 &&
           recipes.map((recipe: recipe) => {

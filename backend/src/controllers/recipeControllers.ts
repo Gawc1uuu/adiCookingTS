@@ -1,5 +1,6 @@
 import mongoose, { isValidObjectId } from "mongoose";
 import express, { Request, Response } from "express";
+import cloudinaryInstance from "../utils/cloudinary";
 import Recipe from "../models/recipeModel";
 
 // get all recipes
@@ -26,10 +27,26 @@ const getRecipe = async (req: Request, res: Response) => {
 
 //create new recipe
 const createRecipe = async (req: Request, res: Response) => {
-  const { title, method, cookingTime } = req.body;
+  const { title, method, ingredients, cookingTime, image } = req.body;
 
   try {
-    const recipe = await Recipe.create({ title, method, cookingTime });
+    const result = await cloudinaryInstance.uploader.upload(image, {
+      folder: "recipes",
+      quality: 80,
+      width: 500,
+      heigth: 500,
+    });
+
+    const recipe = await Recipe.create({
+      title,
+      method,
+      ingredients,
+      cookingTime,
+      image: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+    });
     res.status(200).json(recipe);
   } catch (error) {
     res.status(400).json({ error });
@@ -63,4 +80,4 @@ const updateRecipe = async (req: Request, res: Response) => {
   return res.status(200).json(recipe);
 };
 
-export { createRecipe, getRecipes, getRecipe, deleteRecipe, updateRecipe  };
+export { createRecipe, getRecipes, getRecipe, deleteRecipe, updateRecipe };

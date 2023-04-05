@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const app = (0, express_1.default)();
 const recipeRoutes_1 = __importDefault(require("./routes/recipeRoutes"));
+const cors_1 = __importDefault(require("cors"));
+const app = (0, express_1.default)();
 // connecting to db
 mongoose_1.default.set("strictQuery", false);
 mongoose_1.default

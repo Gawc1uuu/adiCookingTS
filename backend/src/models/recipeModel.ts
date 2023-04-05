@@ -10,8 +10,22 @@ const recipeSchema = new Schema(
       type: String,
       required: true,
     },
+    ingredients: {
+      type: [String],
+      required: true,
+    },
     cookingTime: {
       type: Number,
+    },
+    image: {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
   },
   { timestamps: true }

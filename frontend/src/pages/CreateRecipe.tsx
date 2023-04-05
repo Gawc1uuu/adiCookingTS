@@ -1,10 +1,11 @@
-import React from "react";
+import RecipeForm from "../components/RecipeForm";
 
 const CreateRecipe = () => {
   return (
-    <div>
-      <p>create reacipe</p>
-      <form></form>
+    <div className="mx-4">
+      <div className="container max-w-xl mx-auto">
+        <RecipeForm />
+      </div>
     </div>
   );
 };
