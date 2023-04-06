@@ -88,6 +88,7 @@ const RecipeForm = () => {
           className="w-full rounded px-4 py-1 text-gray-600 focus:outline-none"
           id="title"
           type="text"
+          maxLength={55}
         />
       </div>
       <div>
