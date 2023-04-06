@@ -36,7 +36,7 @@ const SignleRecipe = () => {
             alt="food"
           />
         </div>
-        <div className="flex  flex-col items-center justify-between text-gray-500 space-y-6 md:space-y-0 md:flex-row">
+        <div className="flex  flex-col items-start justify-between text-gray-500 space-y-6 md:space-y-0 md:flex-row">
           <div className="md:w-1/2 px-6 py-4">
             <h4 className="text-pink-300 text-xl font-semibold text-center">
               Składniki:
