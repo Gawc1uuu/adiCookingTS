@@ -18,8 +18,22 @@ const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
 const recipeModel_1 = __importDefault(require("../models/recipeModel"));
 // get all recipes
 const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const recipes = yield recipeModel_1.default.find({}).sort({ createdAt: -1 });
-    res.status(200).json(recipes);
+    const { page = 1, limit = 6 } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const [recipes, total] = yield Promise.all([
+        recipeModel_1.default.find({}).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+        recipeModel_1.default.countDocuments(),
+    ]);
+    // const recipes = await Recipe.find({})
+    //   .sort({ createdAt: -1 })
+    //   .skip(skip)
+    //   .limit(Number(limit));
+    res.status(200).json({
+        currentPage: Number(page),
+        totalPages: Math.ceil(total / Number(limit)),
+        recipes,
+    });
+    console.log(Math.ceil(total / Number(limit)));
 });
 exports.getRecipes = getRecipes;
 //get single recipe

@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import axios, { AxiosError } from "axios";
 import recipe from "../interfaces/recipe";
 import RecipeItem from "../components/RecipeItem";
@@ -7,32 +7,50 @@ import plus from "../assets/plus.png";
 import { RecipesContext } from "../context/RecipesContext";
 
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
   const { state, dispatch } = useContext(RecipesContext);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    const getRecipes = async () => {
+    const getRecipes = async (page: number) => {
       try {
-        const res = await axios.get("http://localhost:4000/api/recipes", {
-          signal: controller.signal,
-        });
+        const res = await axios.get(
+          `http://localhost:4000/api/recipes?page=${page}&limit=6`,
+          {
+            signal: controller.signal,
+          }
+        );
         console.log(res.data);
+        setCurrentPage(res.data.currentPage);
+        setTotalPages(res.data.totalPages);
         dispatch({
           type: "SET_RECIPES",
-          payload: { recipes: res.data },
+          payload: { recipes: res.data.recipes },
         });
       } catch (err) {
         console.log((err as AxiosError).response?.data);
       }
     };
 
-    getRecipes();
+    getRecipes(currentPage);
 
     return () => {
       controller.abort();
     };
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
+
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  console.log(totalPages);
+  console.log(currentPage);
 
   return (
     <div className="mx-2">
@@ -42,6 +60,25 @@ const Home = () => {
           state.recipes.map((recipe: recipe) => {
             return <RecipeItem key={recipe._id} data={recipe} />;
           })}
+      </div>
+      {/* Pagination buttons */}
+      <div className="container mx-auto text-center my-10 ">
+        {/* Display your data here */}
+        {/* Display pagination buttons here */}
+        <button
+          className="bg-white text-gray-800 rounded-l-md border-r border-navpink py-2 hover:bg-navpink hover:text-white px-3"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <button
+          className="bg-white text-gray-800 rounded-r-md py-2 border-l border-navpink hover:bg-navpink hover:text-white px-3"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
       <Link
         className="items-center justify-center w-14 h-14 rounded-full bg-white fixed bottom-10 right-10 group hidden md:flex"

@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        navpink: "#c96382",
+      },
+    },
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
     },

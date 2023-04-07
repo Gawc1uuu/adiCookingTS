@@ -5,9 +5,25 @@ import Recipe from "../models/recipeModel";
 
 // get all recipes
 const getRecipes = async (req: Request, res: Response) => {
-  const recipes = await Recipe.find({}).sort({ createdAt: -1 });
+  const { page = 1, limit = 6 } = req.query;
+  const skip = (Number(page) - 1) * Number(limit);
 
-  res.status(200).json(recipes);
+  const [recipes, total] = await Promise.all([
+    Recipe.find({}).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+    Recipe.countDocuments(),
+  ]);
+
+  // const recipes = await Recipe.find({})
+  //   .sort({ createdAt: -1 })
+  //   .skip(skip)
+  //   .limit(Number(limit));
+
+  res.status(200).json({
+    currentPage: Number(page),
+    totalPages: Math.ceil(total / Number(limit)),
+    recipes,
+  });
+  console.log(Math.ceil(total / Number(limit)));
 };
 
 //get single recipe
