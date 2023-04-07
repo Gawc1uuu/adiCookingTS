@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import CreateRecipe from "./pages/CreateRecipe";
 import SignleRecipe from "./pages/SignleRecipe";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

@@ -23,7 +23,6 @@ const getRecipes = async (req: Request, res: Response) => {
     totalPages: Math.ceil(total / Number(limit)),
     recipes,
   });
-  console.log(Math.ceil(total / Number(limit)));
 };
 
 //get single recipe

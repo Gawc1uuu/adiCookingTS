@@ -33,7 +33,6 @@ const getRecipes = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         totalPages: Math.ceil(total / Number(limit)),
         recipes,
     });
-    console.log(Math.ceil(total / Number(limit)));
 });
 exports.getRecipes = getRecipes;
 //get single recipe

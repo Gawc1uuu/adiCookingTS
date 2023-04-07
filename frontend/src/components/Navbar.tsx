@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="relative container max-w-7xl mx-auto py-1">
         <div className="flex items-center justify-between mx-6 lg:mx-0">
           <div className="flex items-center ">
-            <Link to="/">
+            <Link to={`/`}>
               <div className="flex items-center">
                 <img className="w-32" src={logo.toString()} alt="" />
               </div>
