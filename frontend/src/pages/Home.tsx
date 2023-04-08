@@ -1,10 +1,10 @@
 import { useEffect, useContext, useState } from "react";
 import axios, { AxiosError } from "axios";
-import recipe from "../interfaces/recipe";
-import RecipeItem from "../components/RecipeItem";
 import { Link } from "react-router-dom";
 import plus from "../assets/plus.png";
 import { RecipesContext } from "../context/RecipesContext";
+import RecipesList from "../components/RecipesList";
+import PaginationButtons from "../components/PaginationButtons";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,37 +49,18 @@ const Home = () => {
     setCurrentPage(currentPage + 1);
   };
 
-  console.log(totalPages);
-  console.log(currentPage);
-
   return (
     <div className="mx-2">
-      <div className="container mx-auto w-full my-16 flex flex-col items-center justify-between space-y-8 md:space-y-0 md:flex-row md:flex-wrap md:max-w-6xl md:gap-6">
-        {state.recipes &&
-          state.recipes.length > 0 &&
-          state.recipes.map((recipe: recipe) => {
-            return <RecipeItem key={recipe._id} data={recipe} />;
-          })}
-      </div>
+      <RecipesList data={state.recipes} />
       {/* Pagination buttons */}
-      <div className="container mx-auto text-center my-10 ">
-        {/* Display your data here */}
-        {/* Display pagination buttons here */}
-        <button
-          className="bg-white text-gray-800 rounded-l-md border-r border-navpink py-2 hover:bg-navpink hover:text-white px-3"
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          className="bg-white text-gray-800 rounded-r-md py-2 border-l border-navpink hover:bg-navpink hover:text-white px-3"
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </div>
+      <PaginationButtons
+        onChangePage={{
+          handlePrevPage,
+          handleNextPage,
+          currentPage,
+          totalPages,
+        }}
+      />
       <Link
         className="items-center justify-center w-14 h-14 rounded-full bg-white fixed bottom-10 right-10 group hidden md:flex"
         to="/create"

@@ -25,8 +25,8 @@ const SignleRecipe = () => {
 
   return (
     <div className="mx-2 my-16">
-      <div className=" container mx-auto max-w-6xl bg-white px-6 py-4 rounded-xl">
-        <h2 className="text-2xl md:text-4xl text-pink-400 text-center">
+      <div className=" container mx-auto max-w-6xl bg-white px-6 py-4 rounded-xl dark:bg-gray-500 dark:text-white">
+        <h2 className="text-2xl md:text-4xl text-pink-300 text-center">
           {recipe?.title}
         </h2>
         <div className="my-6">
@@ -36,7 +36,7 @@ const SignleRecipe = () => {
             alt="food"
           />
         </div>
-        <div className="flex  flex-col items-start justify-between text-gray-500 space-y-6 md:space-y-0 md:flex-row">
+        <div className="flex  flex-col items-start justify-between text-gray-500 space-y-6 md:space-y-0 md:flex-row dark:text-white">
           <div className="md:w-1/2 px-6 py-4">
             <h4 className="text-pink-300 text-xl font-semibold text-center">
               Składniki:

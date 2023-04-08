@@ -30,7 +30,7 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
   };
 
   return (
-    <div className="group relative bg-white rounded-lg shadow px-6 py-3 pb-10 space-y-4 transition duration-150 hover:-translate-y-1 w-[75%] md:w-[330px] h-[450px]">
+    <div className="group relative bg-white rounded-lg shadow px-6 py-3 pb-10 space-y-4 transition duration-150 hover:-translate-y-1 w-[75%] md:w-[330px] h-[450px] dark:bg-gray-500 dark:text-white">
       <div className="h-1/2 w-4/5 mx-auto md:w-full">
         <img
           src={data.image.url}
@@ -39,19 +39,19 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
         />
       </div>
       <div className="flex flex-col items-center justify-between h-1/2 space-y-3">
-        <h3 className="text-lg text-pink-300 text-center font-semibold tracking-wider text-gray-800">
+        <h3 className="text-lg text-pink-300 text-center font-semibold tracking-wider">
           {data.title.substring(0, 60)}
         </h3>
-        <p className="text-sm leading-2 text-gray-500 text-center">
+        <p className="text-sm leading-2 text-gray-500 text-center dark:text-white">
           {data.method.substring(0, 80)}...
         </p>
-        <p className="text-xs text-gray-400 text-center">
+        <p className="text-xs tracking-wider text-gray-400 text-center dark:text-gray-100">
           {data.cookingTime} minutes to prepare
         </p>
         <div className="text-center">
           <button
             onClick={clickHandler}
-            className="px-8 py-2 rounded-full bg-gray-400 font-semibold text-sm text-white hover:bg-slate-400 hover:text-white"
+            className="px-8 py-2 rounded-full bg-[#f960d3] font-semibold text-sm text-white hover:bg-[#d311a2] hover:text-white  "
           >
             Cook this
           </button>

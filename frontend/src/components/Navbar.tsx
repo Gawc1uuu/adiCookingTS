@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo4.svg";
 import SearchBar from "./SearchBar";
+import DarkModeToggle from "./DarkModeToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,7 @@ const Navbar = () => {
             </Link>
           </div>
           <SearchBar className="hidden  lg:block" />
+          <DarkModeToggle />
           {/* normal menu */}
           <div className="items-center space-x-12 hidden lg:flex">
             {/* <Link to="/login" className="hover:underline">
@@ -58,27 +60,40 @@ const Navbar = () => {
           </div>
         </div>
         <div
-          onClick={closeMenuHandler}
-          className={`absolute shadow-lg  bg-white rounded-lg left-10 right-10 top-[71px] z-10  transition-all duration-300 ${
+          className={`absolute shadow-lg  bg-white rounded-lg left-10 right-10 top-[71px] z-10  transition-all duration-300 dark:bg-gray-700 dark:text-white ${
             open ? "block" : "hidden"
           } `}
         >
-          <div className="flex flex-col w-full py-10 text-center text-gray-600 space-y-4 px-6">
-            <Link to="/login" className="hover:underline">
+          <div className="flex flex-col w-full py-10 text-center text-gray-600 space-y-4 px-6 dark:text-white">
+            <Link
+              onClick={closeMenuHandler}
+              to="/login"
+              className="hover:underline"
+            >
               Login
             </Link>
             <Link to="/signup">
-              <button className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90 text-white w-full">
+              <button
+                onClick={closeMenuHandler}
+                className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90 text-white w-full dark:bg-violet-700 dark:hover:bg-violet-600"
+              >
                 Sign up
               </button>
             </Link>
             <Link to="/logout">
-              <button className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90 text-white w-full">
+              <button
+                onClick={closeMenuHandler}
+                className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90 text-white w-full dark:bg-violet-700 dark:hover:bg-violet-600"
+              >
                 Logout
               </button>
             </Link>
             <div className="border-t-2 border-t-pink-300"></div>
-            <Link to="/create" className="hover:underline">
+            <Link
+              onClick={closeMenuHandler}
+              to="/create"
+              className="hover:underline"
+            >
               Add new recipe
             </Link>
             <SearchBar className="block lg:hidden" />

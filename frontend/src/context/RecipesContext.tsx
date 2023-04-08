@@ -3,15 +3,22 @@ import recipe from "../interfaces/recipe";
 import Props from "../interfaces/children";
 
 interface MyState {
-  recipes: recipe[] | null;
+  recipes: recipe[] | undefined;
   recipe: recipe | null;
+  searchTerm: string | null;
 }
 
 interface MyAction {
-  type: "ADD_RECIPE" | "UPDATE_RECIPE" | "DELETE_RECIPE" | "SET_RECIPES";
+  type:
+    | "ADD_RECIPE"
+    | "UPDATE_RECIPE"
+    | "DELETE_RECIPE"
+    | "SET_RECIPES"
+    | "SEARCH";
   payload: {
     recipes?: recipe[];
     recipe?: recipe;
+    searchTerm?: string | null;
   };
 }
 
@@ -20,7 +27,11 @@ interface MyContextType {
   dispatch: React.Dispatch<MyAction>;
 }
 
-const initialState: MyState = { recipes: null, recipe: null };
+const initialState: MyState = {
+  recipes: undefined,
+  recipe: null,
+  searchTerm: null,
+};
 
 export const RecipesContext = createContext<MyContextType>({
   state: initialState,
@@ -31,6 +42,7 @@ const recipesReducer = (state: MyState, action: MyAction): MyState => {
   switch (action.type) {
     case "SET_RECIPES":
       return {
+        ...state,
         recipes: action.payload.recipes ?? state.recipes,
         recipe: action.payload.recipe ?? state.recipe,
       };
@@ -48,6 +60,11 @@ const recipesReducer = (state: MyState, action: MyAction): MyState => {
             (recipe) => recipe._id !== action.payload.recipe?._id
           ) ?? state.recipes,
         recipe: action.payload.recipe ?? state.recipe,
+      };
+    case "SEARCH":
+      return {
+        ...state,
+        searchTerm: action.payload.searchTerm ?? state.searchTerm,
       };
     default:
       return state;

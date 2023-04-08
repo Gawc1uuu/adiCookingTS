@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -8,7 +7,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="font-poppins">
+    <div className="font-poppins dark:bg-gray-600">
       <BrowserRouter>
         <Navbar />
         <div>

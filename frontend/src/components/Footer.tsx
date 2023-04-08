@@ -8,7 +8,7 @@ import mail from "../assets/mail.svg";
 
 const Footer = () => {
   return (
-    <div className="bg-navpink text-white">
+    <footer className="bg-navpink text-white ">
       <div className="container max-w-6xl mx-auto px-6 py-10">
         <div className="flex flex-col items-center justify-between space-y-12 md:flex-row md:space-y-0 md:items-start">
           <div>
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
