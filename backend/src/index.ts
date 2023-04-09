@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import mongoose, { MongooseError } from "mongoose";
 import recipeRoutes from "./routes/recipeRoutes";
+import userRoutes from "./routes/userRoutes";
 
 import cors from "cors";
 const app = express();
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 //routes
 app.use("/api/recipes", recipeRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("*", (req: Request, res: Response) => {
   res.status(404).json({ msg: "Not found" });

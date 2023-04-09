@@ -60,7 +60,7 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
       <div>
         <img
           onClick={deleteHandler}
-          className="hidden absolute invert-[60%] bottom-1 right-2 w-6 transition-all group-hover:inline-block hover:invert-0 hover:cursor-pointer"
+          className="hidden absolute invert-[60%] bottom-1 right-2 w-6 transition-all group-hover:inline-block hover:invert-0 hover:cursor-pointer dark:invert-[70%] dark:hover:invert-[100%]"
           src={deleteIcon.toString()}
           alt=""
         />
