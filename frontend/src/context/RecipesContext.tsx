@@ -1,31 +1,6 @@
 import React, { createContext, useReducer } from "react";
-import recipe from "../interfaces/recipe";
+import { MyState, MyAction, MyContextType } from "../interfaces/recipe";
 import Props from "../interfaces/children";
-
-interface MyState {
-  recipes: recipe[] | undefined;
-  recipe: recipe | null;
-  searchTerm: string | null;
-}
-
-interface MyAction {
-  type:
-    | "ADD_RECIPE"
-    | "UPDATE_RECIPE"
-    | "DELETE_RECIPE"
-    | "SET_RECIPES"
-    | "SEARCH";
-  payload: {
-    recipes?: recipe[];
-    recipe?: recipe;
-    searchTerm?: string | null;
-  };
-}
-
-interface MyContextType {
-  state: MyState;
-  dispatch: React.Dispatch<MyAction>;
-}
 
 const initialState: MyState = {
   recipes: undefined,
@@ -73,8 +48,6 @@ const recipesReducer = (state: MyState, action: MyAction): MyState => {
 
 const RecipesContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(recipesReducer, initialState);
-
-  console.log(state.recipes);
 
   return (
     <RecipesContext.Provider value={{ state, dispatch }}>

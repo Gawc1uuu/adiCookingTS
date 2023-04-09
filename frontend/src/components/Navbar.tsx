@@ -37,7 +37,7 @@ const Navbar = () => {
                 Sign up
               </button>
             </Link> */}
-            <Link to="/logout">
+            <Link to="/login">
               <button className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90">
                 Logout
               </button>

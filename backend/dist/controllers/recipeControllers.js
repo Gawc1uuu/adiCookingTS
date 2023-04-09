@@ -45,7 +45,7 @@ const getRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!recipe) {
         return res.status(404).json({ error: "No such recipe" });
     }
-    res.status(200).json(recipe);
+    return res.status(200).json(recipe);
 });
 exports.getRecipe = getRecipe;
 //create new recipe

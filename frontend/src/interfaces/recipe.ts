@@ -13,3 +13,28 @@ export default interface recipe {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface MyState {
+  recipes: recipe[] | undefined;
+  recipe: recipe | null;
+  searchTerm: string | null;
+}
+
+export interface MyAction {
+  type:
+    | "ADD_RECIPE"
+    | "UPDATE_RECIPE"
+    | "DELETE_RECIPE"
+    | "SET_RECIPES"
+    | "SEARCH";
+  payload: {
+    recipes?: recipe[];
+    recipe?: recipe;
+    searchTerm?: string | null;
+  };
+}
+
+export interface MyContextType {
+  state: MyState;
+  dispatch: React.Dispatch<MyAction>;
+}
