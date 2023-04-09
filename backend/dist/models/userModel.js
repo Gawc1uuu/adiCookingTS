@@ -91,4 +91,5 @@ userSchema.statics.signup = function (email, password) {
         return user;
     });
 };
-exports.default = (0, mongoose_1.model)("User", userSchema);
+const User = (0, mongoose_1.model)("User", userSchema);
+exports.default = User;
