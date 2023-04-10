@@ -51,6 +51,7 @@ exports.getRecipe = getRecipe;
 //create new recipe
 const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, method, ingredients, cookingTime, image } = req.body;
+    const user = req.user;
     try {
         const result = yield cloudinary_1.default.uploader.upload(image, {
             folder: "recipes",
@@ -67,6 +68,10 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 public_id: result.public_id,
                 url: result.secure_url,
             },
+            createdBy: {
+                username: user.username,
+                user_id: user._id,
+            },
         });
         res.status(200).json(recipe);
     }
@@ -77,6 +82,8 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createRecipe = createRecipe;
 //delete a recipe
 const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const user_id = req.user._id;
     const { id } = req.params;
     if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: "Id not valid" });
@@ -84,6 +91,11 @@ const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const recipe = yield recipeModel_1.default.findOneAndDelete({ _id: id });
     if (!recipe) {
         return res.status(404).json({ error: "No such recipe" });
+    }
+    if (((_a = recipe.createdBy) === null || _a === void 0 ? void 0 : _a.user_id) !== user_id) {
+        return res
+            .status(400)
+            .json({ error: "Only author can delete his own recipes" });
     }
     return res.status(200).json(recipe);
 });

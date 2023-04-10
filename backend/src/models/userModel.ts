@@ -4,16 +4,22 @@ import validator from "validator";
 
 interface IUser {
   _id: string;
+  username: string;
   email: string;
   password: string;
 }
 
 interface IUserModel extends Model<IUser> {
-  signup(email: string, password: string): Promise<IUser>;
+  signup(username: string, email: string, password: string): Promise<IUser>;
   login(email: string, password: string): Promise<IUser>;
 }
 
 const userSchema = new Schema<IUser>({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
@@ -53,16 +59,21 @@ userSchema.statics.login = async function (
 };
 
 userSchema.statics.signup = async function (
+  username: string,
   email: string,
   password: string
 ): Promise<IUser> {
-  if (!email || !password) {
-    throw Error("email and password are required");
+  if (!email || !password || !username) {
+    throw Error("email, password and username are required");
   }
 
   const exists = await this.findOne({ email });
   if (exists) {
     throw Error("User with that email already exists");
+  }
+  const isUsedUsername = await this.findOne({ username });
+  if (isUsedUsername) {
+    throw Error("Username is already taken");
   }
 
   if (!validator.isEmail(email)) {
@@ -76,7 +87,7 @@ userSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = this.create({ email, password: hash });
+  const user = this.create({ username, email, password: hash });
   return user;
 };
 

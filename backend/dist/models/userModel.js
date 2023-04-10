@@ -39,6 +39,11 @@ const mongoose_1 = require("mongoose");
 const bcrypt = __importStar(require("bcrypt"));
 const validator_1 = __importDefault(require("validator"));
 const userSchema = new mongoose_1.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     email: {
         type: String,
         required: true,
@@ -70,14 +75,18 @@ userSchema.statics.login = function (email, password) {
         }
     });
 };
-userSchema.statics.signup = function (email, password) {
+userSchema.statics.signup = function (username, email, password) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!email || !password) {
-            throw Error("email and password are required");
+        if (!email || !password || !username) {
+            throw Error("email, password and username are required");
         }
         const exists = yield this.findOne({ email });
         if (exists) {
             throw Error("User with that email already exists");
+        }
+        const isUsedUsername = yield this.findOne({ username });
+        if (isUsedUsername) {
+            throw Error("Username is already taken");
         }
         if (!validator_1.default.isEmail(email)) {
             throw Error("Incorrect email");
@@ -87,7 +96,7 @@ userSchema.statics.signup = function (email, password) {
         }
         const salt = yield bcrypt.genSalt(10);
         const hash = yield bcrypt.hash(password, salt);
-        const user = this.create({ email, password: hash });
+        const user = this.create({ username, email, password: hash });
         return user;
     });
 };

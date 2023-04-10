@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 import Props from "../interfaces/children";
 import { AuthAction, AuthState, AuthContextType } from "../interfaces/user";
 
@@ -31,6 +31,15 @@ const AuthContextProvider = ({ children }: Props) => {
     user: null,
   });
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      dispatch({ type: "LOGIN", payload: JSON.parse(user) });
+    }
+  }, []);
+
+  console.log(state.user);
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       {children}

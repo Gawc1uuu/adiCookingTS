@@ -1,6 +1,4 @@
 import express, { Router } from "express";
-import Recipe from "../models/recipeModel";
-import { MongooseError } from "mongoose";
 import {
   createRecipe,
   getRecipes,
@@ -8,18 +6,21 @@ import {
   deleteRecipe,
   updateRecipe,
 } from "../controllers/recipeControllers";
+import authMiddleware from "../middleware/requireAuth";
 
 const router: Router = express.Router();
+
+// middleware
 
 //get all recipes
 router.get("/", getRecipes);
 
 router.get("/:id", getRecipe);
 
-router.post("/", createRecipe);
+router.post("/", authMiddleware, createRecipe);
 
-router.delete("/:id", deleteRecipe);
+router.delete("/:id", authMiddleware, deleteRecipe);
 
-router.patch("/:id", updateRecipe);
+router.patch("/:id", authMiddleware, updateRecipe);
 
 export default router;

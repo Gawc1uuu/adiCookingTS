@@ -4,19 +4,30 @@ import deleteIcon from "../assets/delete.svg";
 import axios, { AxiosError } from "axios";
 import { useContext } from "react";
 import { RecipesContext } from "../context/RecipesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 interface RecipeItemProps {
   data: recipe;
 }
 
 const RecipeItem = ({ data }: RecipeItemProps) => {
+  const { state: AuthState } = useAuthContext();
   const navigate = useNavigate();
   const { dispatch } = useContext(RecipesContext);
 
   const deleteHandler = async (e: React.MouseEvent) => {
+    if (!AuthState.user) {
+      return;
+    }
+
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/recipes/${data._id}`
+        `http://localhost:4000/api/recipes/${data._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${AuthState.user?.token}`,
+          },
+        }
       );
       console.log("Success", response.data);
       dispatch({ type: "DELETE_RECIPE", payload: { recipe: data } });
@@ -39,9 +50,14 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
         />
       </div>
       <div className="flex flex-col items-center justify-between h-1/2 space-y-3">
-        <h3 className="text-lg text-pink-300 text-center font-semibold tracking-wider">
-          {data.title.substring(0, 60)}
-        </h3>
+        <div>
+          <h3 className="text-lg text-pink-300 text-center font-semibold tracking-wider">
+            {data.title.substring(0, 60)}
+          </h3>
+          <p className="text-xs text-gray-300">
+            created by: {data.createdBy.username}
+          </p>
+        </div>
         <p className="text-sm leading-2 text-gray-500 text-center dark:text-white">
           {data.method.substring(0, 80)}...
         </p>

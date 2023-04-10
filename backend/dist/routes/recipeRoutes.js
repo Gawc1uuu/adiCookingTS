@@ -5,11 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const recipeControllers_1 = require("../controllers/recipeControllers");
+const requireAuth_1 = __importDefault(require("../middleware/requireAuth"));
 const router = express_1.default.Router();
+// middleware
 //get all recipes
 router.get("/", recipeControllers_1.getRecipes);
 router.get("/:id", recipeControllers_1.getRecipe);
-router.post("/", recipeControllers_1.createRecipe);
-router.delete("/:id", recipeControllers_1.deleteRecipe);
-router.patch("/:id", recipeControllers_1.updateRecipe);
+router.post("/", requireAuth_1.default, recipeControllers_1.createRecipe);
+router.delete("/:id", requireAuth_1.default, recipeControllers_1.deleteRecipe);
+router.patch("/:id", requireAuth_1.default, recipeControllers_1.updateRecipe);
 exports.default = router;

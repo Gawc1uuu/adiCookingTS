@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 import plus from "../assets/plus.png";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 const RecipeForm = () => {
+  const { state: AuthState } = useAuthContext();
+  // form states
   const [title, setTitle] = useState("");
   const [ingredient, setIngredient] = useState("");
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -16,6 +19,9 @@ const RecipeForm = () => {
     string | undefined
   >(undefined);
   const [cookingTime, setCookingTime] = useState("");
+  // error and loading states
+  const [error, setError] = useState<any>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // handling file input to add images
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +47,15 @@ const RecipeForm = () => {
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    setError(null);
+    setIsLoading(true);
+
+    if (!AuthState.user) {
+      setError("You must be logged in to add recipes!");
+      setIsLoading(false);
+      return;
+    }
+
     const newRecipe = {
       title,
       method,
@@ -50,15 +65,26 @@ const RecipeForm = () => {
     };
     console.log(newRecipe);
     try {
-      const response = await axios.post("http://localhost:4000/api/recipes", {
-        ...newRecipe,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/api/recipes",
+        {
+          ...newRecipe,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${AuthState.user?.token}`,
+          },
+        }
+      );
+      setIsLoading(false);
+      setError(false);
       console.log("Success", response.data);
     } catch (error) {
       console.log("ERRor", (error as AxiosError).response?.data);
+      setIsLoading(false);
+      setError(false);
     }
 
-    console.log(newRecipe);
     setTitle("");
     setCookingTime("");
     setMethod("");
@@ -67,7 +93,7 @@ const RecipeForm = () => {
     setSelectedFile(undefined);
   };
 
-  const addIngredientHandler = (e: React.MouseEvent) => {
+  const addIngredientHandler = () => {
     setIngredients((prevState) => {
       return [...prevState, ingredient];
     });
@@ -109,6 +135,7 @@ const RecipeForm = () => {
             type="text"
           />
           <button
+            disabled={isLoading}
             onClick={addIngredientHandler}
             type="button"
             className="text-center px-2 py-1 bg-[#e68fa9] rounded text-white font-semibold hover:bg-pink-400"
@@ -174,6 +201,7 @@ const RecipeForm = () => {
             step="1"
           />
           <button
+            disabled={isLoading}
             type="submit"
             className="w-1/2 text-center py-1 bg-[#e68fa9] rounded text-white font-semibold hover:bg-pink-400"
           >
@@ -181,6 +209,7 @@ const RecipeForm = () => {
           </button>
         </div>
       </div>
+      {error && <p className="error">{error}</p>}
     </form>
   );
 };

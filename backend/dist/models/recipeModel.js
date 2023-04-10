@@ -27,6 +27,16 @@ const recipeSchema = new mongoose_1.Schema({
             required: true,
         },
     },
+    createdBy: {
+        username: {
+            type: String,
+            required: true,
+        },
+        user_id: {
+            type: String,
+            required: true,
+        },
+    },
 }, { timestamps: true });
 const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);
 exports.default = Recipe;

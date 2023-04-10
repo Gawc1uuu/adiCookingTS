@@ -1,17 +1,21 @@
-import { useState, useContext, FormEvent } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState, FormEvent } from "react";
+// import { useAuthContext } from "../hooks/useAuthContext";
 import foodPic from "../assets/bowl.jpg";
+import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
-  const { dispatch } = useContext(AuthContext);
+  const { signup, isLoading, error } = useSignup();
+  // form states
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(email, password);
+    await signup(username, email, password);
     setEmail("");
     setPassword("");
+    setUsername("");
   };
 
   return (
@@ -31,6 +35,13 @@ const Signup = () => {
             <div>
               <form onSubmit={submitHandler}>
                 <input
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  type="text"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  placeholder="Please Enter Your Username"
+                />
+                <input
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   type="email"
@@ -44,9 +55,13 @@ const Signup = () => {
                   className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
                   placeholder="Please Enter Your Password"
                 />
-                <button className="bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150">
+                <button
+                  disabled={isLoading}
+                  className="bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150"
+                >
                   Sign up
                 </button>
+                {error && <p className="error">{error.error}</p>}
               </form>
             </div>
           </div>

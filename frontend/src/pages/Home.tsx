@@ -22,7 +22,7 @@ const Home = () => {
             signal: controller.signal,
           }
         );
-        console.log(res.data);
+
         setCurrentPage(res.data.currentPage);
         setTotalPages(res.data.totalPages);
         dispatch({
@@ -51,7 +51,14 @@ const Home = () => {
 
   return (
     <div className="mx-2">
-      <RecipesList data={state.recipes} />
+      {(!state.recipes || state.recipes?.length === 0) && (
+        <p className="text-center min-h-screen flex items-center justify-center">
+          No recipes to load... Add some!
+        </p>
+      )}
+      {state.recipes && state.recipes?.length !== 0 && (
+        <RecipesList data={state.recipes} />
+      )}
       {/* Pagination buttons */}
       <PaginationButtons
         onChangePage={{

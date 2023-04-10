@@ -26,7 +26,9 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const savedUser = yield userModel_1.default.login(email, password);
         // create token
         const token = createToken(savedUser._id);
-        res.status(200).json({ email, token });
+        res
+            .status(200)
+            .json({ username: savedUser.username, user_id: savedUser._id, token });
     }
     catch (error) {
         res.status(400).json({ error: error.message });
@@ -34,12 +36,12 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.loginUser = loginUser;
 const signupUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
     try {
-        const savedUser = yield userModel_1.default.signup(email, password);
+        const savedUser = yield userModel_1.default.signup(username, email, password);
         // create token
         const token = createToken(savedUser._id);
-        res.status(200).json({ email, token });
+        res.status(200).json({ username, user_id: savedUser._id, token });
     }
     catch (error) {
         res.status(400).json({ error: error.message });

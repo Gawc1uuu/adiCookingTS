@@ -18,22 +18,24 @@ const loginUser = async (req: Request, res: Response) => {
     // create token
     const token = createToken(savedUser._id);
 
-    res.status(200).json({ email, token });
+    res
+      .status(200)
+      .json({ username: savedUser.username, user_id: savedUser._id, token });
   } catch (error) {
     res.status(400).json({ error: (error as MongooseError).message });
   }
 };
 
 const signupUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    const savedUser = await User.signup(email, password);
+    const savedUser = await User.signup(username, email, password);
 
     // create token
     const token = createToken(savedUser._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ username, user_id: savedUser._id, token });
   } catch (error) {
     res.status(400).json({ error: (error as MongooseError).message });
   }

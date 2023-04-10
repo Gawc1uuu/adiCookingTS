@@ -8,6 +8,10 @@ html {
   background: #f1f1f1;
 }
 
+.error {
+  @apply text-pink-700 bg-pink-300 border border-pink-700 text-sm p-2 rounded-lg mt-2;
+}
+
 .hamburger {
   position: relative;
   width: 24px;

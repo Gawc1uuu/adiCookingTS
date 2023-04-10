@@ -12,6 +12,10 @@ export default interface recipe {
   cookingTime: string;
   createdAt: string;
   updatedAt: string;
+  createdBy: {
+    user_id: string;
+    username: string;
+  };
 }
 
 export interface MyState {

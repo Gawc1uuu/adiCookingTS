@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import CreateRecipe from "./pages/CreateRecipe";
@@ -6,8 +6,11 @@ import SignleRecipe from "./pages/SignleRecipe";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
+  const { state: AuthState } = useAuthContext();
+
   return (
     <div className="font-poppins dark:bg-gray-600">
       <BrowserRouter>
@@ -15,8 +18,14 @@ function App() {
         <div className="min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/login"
+              element={!AuthState.user ? <Login /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/signup"
+              element={!AuthState.user ? <Signup /> : <Navigate to="/" />}
+            />
             <Route path="/create" element={<CreateRecipe />} />
             <Route path="/:id" element={<SignleRecipe />} />
           </Routes>
