@@ -18,7 +18,7 @@ const DarkModeToggle = () => {
       onClick={modeToggleHandler}
       id="theme-toggle"
       className={`absolute right-20 top-5 w-8 h-8   hover:bg-pink-500 focus:ring-2 focus:ring-pink-500  hover:dark:bg-pink-500 focus:dark:ring-4 focus:dark:ring-pink-500 p-1 rounded-lg ${
-        state.user ? "md:right-32" : "md:right-56"
+        state.user ? "md:right-56" : "md:right-80"
       } `}
     >
       <img

@@ -30,10 +30,13 @@ const Navbar = () => {
               </div>
             </Link>
           </div>
-          {state.user && <SearchBar className="hidden  lg:block" />}
+          <SearchBar className="hidden  lg:block" />
           <DarkModeToggle />
           {/* normal menu */}
           <div className="items-center space-x-12 hidden lg:flex">
+            <Link onClick={closeMenuHandler} to="/" className="hover:underline">
+              Home
+            </Link>
             {!state.user && (
               <>
                 <Link to="/login" className="hover:underline">
@@ -79,6 +82,9 @@ const Navbar = () => {
           } `}
         >
           <div className="flex flex-col w-full py-10 text-center text-gray-600 space-y-4 px-6 dark:text-white">
+            <Link onClick={closeMenuHandler} to="/" className="hover:underline">
+              Home
+            </Link>
             {!state.user && (
               <>
                 <Link

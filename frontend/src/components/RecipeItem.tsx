@@ -30,7 +30,7 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
         }
       );
       console.log("Success", response.data);
-      dispatch({ type: "DELETE_RECIPE", payload: { recipe: data } });
+      dispatch({ type: "DELETE_RECIPE", payload: { recipe: response.data } });
     } catch (error) {
       console.log((error as AxiosError).message);
     }
@@ -67,20 +67,22 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
         <div className="text-center">
           <button
             onClick={clickHandler}
-            className="px-8 py-2 rounded-full bg-[#f960d3] font-semibold text-sm text-white hover:bg-[#d311a2] hover:text-white  "
+            className="px-8 py-2 rounded-full bg-[#fc8bd8] font-semibold text-sm text-white hover:bg-[#ff74dc] hover:text-white  "
           >
             Cook this
           </button>
         </div>
       </div>
-      <div>
-        <img
-          onClick={deleteHandler}
-          className="hidden absolute invert-[60%] bottom-1 right-2 w-6 transition-all group-hover:inline-block hover:invert-0 hover:cursor-pointer dark:invert-[70%] dark:hover:invert-[100%]"
-          src={deleteIcon.toString()}
-          alt=""
-        />
-      </div>
+      {data.createdBy.user_id === AuthState.user?.user_id && (
+        <div>
+          <img
+            onClick={deleteHandler}
+            className="hidden absolute invert-[60%] bottom-1 right-2 w-6 transition-all group-hover:inline-block hover:invert-0 hover:cursor-pointer dark:invert-[70%] dark:hover:invert-[100%]"
+            src={deleteIcon.toString()}
+            alt=""
+          />
+        </div>
+      )}
     </div>
   );
 };

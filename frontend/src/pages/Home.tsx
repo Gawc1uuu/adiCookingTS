@@ -5,22 +5,20 @@ import plus from "../assets/plus.png";
 import { RecipesContext } from "../context/RecipesContext";
 import RecipesList from "../components/RecipesList";
 import PaginationButtons from "../components/PaginationButtons";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState();
+  const [totalPages, setTotalPages] = useState(0);
   const { state, dispatch } = useContext(RecipesContext);
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const getRecipes = async (page: number) => {
       try {
+        setIsLoading(true);
         const res = await axios.get(
-          `http://localhost:4000/api/recipes?page=${page}&limit=6`,
-          {
-            signal: controller.signal,
-          }
+          `http://localhost:4000/api/recipes?page=${page}&limit=6`
         );
 
         setCurrentPage(res.data.currentPage);
@@ -29,17 +27,15 @@ const Home = () => {
           type: "SET_RECIPES",
           payload: { recipes: res.data.recipes },
         });
+        setIsLoading(false);
       } catch (err) {
+        setIsLoading(false);
         console.log((err as AxiosError).response?.data);
       }
     };
 
     getRecipes(currentPage);
-
-    return () => {
-      controller.abort();
-    };
-  }, [dispatch, currentPage]);
+  }, [currentPage, dispatch]);
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
@@ -51,10 +47,21 @@ const Home = () => {
 
   return (
     <div className="mx-2">
-      {(!state.recipes || state.recipes?.length === 0) && (
-        <p className="text-center min-h-screen flex items-center justify-center">
+      {!isLoading && state.recipes?.length === 0 && (
+        <p className="text-center min-h-screen flex items-center justify-center dark:text-white">
           No recipes to load... Add some!
         </p>
+      )}
+      {isLoading && (
+        <div className="text-center min-h-screen flex justify-center items-center">
+          <ClipLoader
+            color={"#c96382"}
+            loading={isLoading}
+            size={80}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
       )}
       {state.recipes && state.recipes?.length !== 0 && (
         <RecipesList data={state.recipes} />

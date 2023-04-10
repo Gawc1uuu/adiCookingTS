@@ -82,8 +82,6 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createRecipe = createRecipe;
 //delete a recipe
 const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const user_id = req.user._id;
     const { id } = req.params;
     if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: "Id not valid" });
@@ -92,11 +90,11 @@ const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     if (!recipe) {
         return res.status(404).json({ error: "No such recipe" });
     }
-    if (((_a = recipe.createdBy) === null || _a === void 0 ? void 0 : _a.user_id) !== user_id) {
-        return res
-            .status(400)
-            .json({ error: "Only author can delete his own recipes" });
-    }
+    // if (recipe.createdBy?.user_id !== _id) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Only author can delete his own recipes" });
+    // }
     return res.status(200).json(recipe);
 });
 exports.deleteRecipe = deleteRecipe;

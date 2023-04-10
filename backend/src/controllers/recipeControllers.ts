@@ -79,7 +79,6 @@ const createRecipe = async (req: AuthenticatedRequest, res: Response) => {
 
 //delete a recipe
 const deleteRecipe = async (req: AuthenticatedRequest, res: Response) => {
-  const user_id = req.user._id;
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Id not valid" });
@@ -90,11 +89,11 @@ const deleteRecipe = async (req: AuthenticatedRequest, res: Response) => {
     return res.status(404).json({ error: "No such recipe" });
   }
 
-  if (recipe.createdBy?.user_id !== user_id) {
-    return res
-      .status(400)
-      .json({ error: "Only author can delete his own recipes" });
-  }
+  // if (recipe.createdBy?.user_id !== _id) {
+  //   return res
+  //     .status(400)
+  //     .json({ error: "Only author can delete his own recipes" });
+  // }
 
   return res.status(200).json(recipe);
 };

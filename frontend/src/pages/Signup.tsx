@@ -2,6 +2,7 @@ import { useState, FormEvent } from "react";
 // import { useAuthContext } from "../hooks/useAuthContext";
 import foodPic from "../assets/bowl.jpg";
 import { useSignup } from "../hooks/useSignup";
+import { ClipLoader } from "react-spinners";
 
 const Signup = () => {
   const { signup, isLoading, error } = useSignup();
@@ -55,12 +56,29 @@ const Signup = () => {
                   className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
                   placeholder="Please Enter Your Password"
                 />
-                <button
-                  disabled={isLoading}
-                  className="bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150"
-                >
-                  Sign up
-                </button>
+                {!isLoading && (
+                  <button
+                    disabled={isLoading}
+                    className="bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150"
+                  >
+                    Sign up
+                  </button>
+                )}
+                {isLoading && (
+                  <button
+                    disabled={isLoading}
+                    className="flex justify-center items-center bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150 bg-opacity-80"
+                  >
+                    <ClipLoader
+                      color={"white"}
+                      loading={isLoading}
+                      size={20}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  </button>
+                )}
+
                 {error && <p className="error">{error.error}</p>}
               </form>
             </div>
