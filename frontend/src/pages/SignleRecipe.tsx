@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import recipe from "../interfaces/recipe";
+import Comments from "../components/Comments";
 
 const SignleRecipe = () => {
   const [recipe, setRecipe] = useState<recipe | undefined>(undefined);
@@ -60,6 +61,7 @@ const SignleRecipe = () => {
           </div>
         </div>
       </div>
+      <Comments comments={recipe?.comments} />
     </div>
   );
 };

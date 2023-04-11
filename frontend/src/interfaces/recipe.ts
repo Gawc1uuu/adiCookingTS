@@ -16,6 +16,7 @@ export default interface recipe {
     user_id: string;
     username: string;
   };
+  comments: IComment[];
 }
 
 export interface MyState {
@@ -41,4 +42,13 @@ export interface MyAction {
 export interface MyContextType {
   state: MyState;
   dispatch: React.Dispatch<MyAction>;
+}
+export interface IComment {
+  text: string;
+  rating: number;
+  createdBy: {
+    username: string;
+    user_id: string;
+  };
+  createdAt: string;
 }

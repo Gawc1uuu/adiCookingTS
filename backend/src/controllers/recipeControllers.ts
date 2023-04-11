@@ -111,4 +111,40 @@ const updateRecipe = async (req: AuthenticatedRequest, res: Response) => {
   return res.status(200).json(recipe);
 };
 
-export { createRecipe, getRecipes, getRecipe, deleteRecipe, updateRecipe };
+const createComment = async (req: Request, res: Response) => {
+  try {
+    const { text, rating, createdBy, createdAt, updatedAt } = req.body;
+    const { id } = req.params;
+
+    // find the post by ID
+    const recipe = await Recipe.findById(id);
+
+    // create new comment
+    const comment = { text, rating, createdBy };
+
+    if (!recipe) {
+      return res.status(400).json({ error: "Recipe not found" });
+    }
+
+    // add new comment to post's comments array
+    recipe.comments.push(comment);
+
+    // save updated post to database
+    await recipe.save();
+
+    // send success response
+    res.status(200).json({ comment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export {
+  createRecipe,
+  getRecipes,
+  getRecipe,
+  deleteRecipe,
+  updateRecipe,
+  createComment,
+};

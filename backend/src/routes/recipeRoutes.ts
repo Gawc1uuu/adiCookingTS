@@ -5,6 +5,7 @@ import {
   getRecipe,
   deleteRecipe,
   updateRecipe,
+  createComment,
 } from "../controllers/recipeControllers";
 import authMiddleware from "../middleware/requireAuth";
 
@@ -18,6 +19,8 @@ router.get("/", getRecipes);
 router.get("/:id", getRecipe);
 
 router.post("/", authMiddleware, createRecipe);
+// add comment route
+router.post("/:id/comments", authMiddleware, createComment);
 
 router.delete("/:id", authMiddleware, deleteRecipe);
 

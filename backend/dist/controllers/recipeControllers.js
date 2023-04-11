@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateRecipe = exports.deleteRecipe = exports.getRecipe = exports.getRecipes = exports.createRecipe = void 0;
+exports.createComment = exports.updateRecipe = exports.deleteRecipe = exports.getRecipe = exports.getRecipes = exports.createRecipe = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
 const recipeModel_1 = __importDefault(require("../models/recipeModel"));
@@ -111,3 +111,27 @@ const updateRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     return res.status(200).json(recipe);
 });
 exports.updateRecipe = updateRecipe;
+const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { text, rating, createdBy, createdAt, updatedAt } = req.body;
+        const { id } = req.params;
+        // find the post by ID
+        const recipe = yield recipeModel_1.default.findById(id);
+        // create new comment
+        const comment = { text, rating, createdBy };
+        if (!recipe) {
+            return res.status(400).json({ error: "Recipe not found" });
+        }
+        // add new comment to post's comments array
+        recipe.comments.push(comment);
+        // save updated post to database
+        yield recipe.save();
+        // send success response
+        res.status(200).json({ comment });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+exports.createComment = createComment;
