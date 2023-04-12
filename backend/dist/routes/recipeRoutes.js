@@ -12,8 +12,10 @@ const router = express_1.default.Router();
 router.get("/", recipeControllers_1.getRecipes);
 router.get("/:id", recipeControllers_1.getRecipe);
 router.post("/", requireAuth_1.default, recipeControllers_1.createRecipe);
-// add comment route
-router.post("/:id/comments", requireAuth_1.default, recipeControllers_1.createComment);
 router.delete("/:id", requireAuth_1.default, recipeControllers_1.deleteRecipe);
 router.patch("/:id", requireAuth_1.default, recipeControllers_1.updateRecipe);
+// add comment route
+router.post("/:id/comments", requireAuth_1.default, recipeControllers_1.createComment);
+// get comments route
+router.get("/:id/comments", recipeControllers_1.getAllComments);
 exports.default = router;

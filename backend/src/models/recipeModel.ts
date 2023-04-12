@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 interface IComment {
+  _id: string;
   text: string;
   rating: number;
   createdBy: {

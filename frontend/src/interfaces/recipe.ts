@@ -44,6 +44,7 @@ export interface MyContextType {
   dispatch: React.Dispatch<MyAction>;
 }
 export interface IComment {
+  _id: string;
   text: string;
   rating: number;
   createdBy: {

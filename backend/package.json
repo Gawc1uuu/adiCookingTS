@@ -22,6 +22,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.15.11",
+    "@types/socket.io": "^3.0.2",
     "@types/validator": "^13.7.14",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
@@ -34,7 +35,9 @@
     "mongoose": "^7.0.3",
     "nodemon": "^2.0.22",
     "rimraf": "^4.4.1",
+    "socket.io": "^4.6.1",
     "typescript": "^5.0.3",
+    "uuidv4": "^6.2.13",
     "validator": "^13.9.0"
   }
 }

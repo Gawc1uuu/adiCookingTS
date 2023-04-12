@@ -28,7 +28,6 @@ const useComment = () => {
         }
       )
       .then((response) => {
-        console.log("Success in adding comment", response.data);
         setIsLoading(false);
       })
       .catch((error) => {

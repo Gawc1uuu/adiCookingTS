@@ -113,14 +113,14 @@ const updateRecipe = async (req: AuthenticatedRequest, res: Response) => {
 
 const createComment = async (req: Request, res: Response) => {
   try {
-    const { text, rating, createdBy, createdAt, updatedAt } = req.body;
+    const { _id, text, rating, createdBy, createdAt, updatedAt } = req.body;
     const { id } = req.params;
 
     // find the post by ID
     const recipe = await Recipe.findById(id);
 
     // create new comment
-    const comment = { text, rating, createdBy };
+    const comment = { _: id, text, rating, createdBy };
 
     if (!recipe) {
       return res.status(400).json({ error: "Recipe not found" });
@@ -140,6 +140,24 @@ const createComment = async (req: Request, res: Response) => {
   }
 };
 
+const getAllComments = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const recipe = await Recipe.findById(id);
+
+    if (!recipe) {
+      return res.status(400).json({ error: "Recipe not found" });
+    }
+
+    const comments = recipe.comments;
+    res.status(200).json(comments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export {
   createRecipe,
   getRecipes,
@@ -147,4 +165,5 @@ export {
   deleteRecipe,
   updateRecipe,
   createComment,
+  getAllComments,
 };

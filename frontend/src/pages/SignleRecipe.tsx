@@ -49,7 +49,7 @@ const SignleRecipe = () => {
             </h4>
             <ul className="list-disc text-center list-inside">
               {recipe?.ingredients.map((ingredient) => (
-                <li>{ingredient}</li>
+                <li key={ingredient}>{ingredient}</li>
               ))}
             </ul>
           </div>
@@ -61,7 +61,7 @@ const SignleRecipe = () => {
           </div>
         </div>
       </div>
-      <Comments comments={recipe?.comments} />
+      <Comments />
     </div>
   );
 };
