@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllComments = exports.createComment = exports.updateRecipe = exports.deleteRecipe = exports.getRecipe = exports.getRecipes = exports.createRecipe = void 0;
+exports.deleteComment = exports.getAllComments = exports.createComment = exports.updateRecipe = exports.deleteRecipe = exports.getRecipe = exports.getRecipes = exports.createRecipe = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const cloudinary_1 = __importDefault(require("../utils/cloudinary"));
 const recipeModel_1 = __importDefault(require("../models/recipeModel"));
@@ -82,10 +82,21 @@ const createRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.createRecipe = createRecipe;
 //delete a recipe
 const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { id } = req.params;
     if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: "Id not valid" });
     }
+    const deleteImage = (publicId) => {
+        cloudinary_1.default.uploader.destroy(publicId, (error, result) => {
+            if (error) {
+                console.log("Error deleting image from Cloudinary", error);
+            }
+            else {
+                console.log("Image deleted from Cloudinary", result);
+            }
+        });
+    };
     const recipe = yield recipeModel_1.default.findOneAndDelete({ _id: id });
     if (!recipe) {
         return res.status(404).json({ error: "No such recipe" });
@@ -95,6 +106,7 @@ const deleteRecipe = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     //     .status(400)
     //     .json({ error: "Only author can delete his own recipes" });
     // }
+    deleteImage((_a = recipe.image) === null || _a === void 0 ? void 0 : _a.public_id);
     return res.status(200).json(recipe);
 });
 exports.deleteRecipe = deleteRecipe;
@@ -151,3 +163,24 @@ const getAllComments = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getAllComments = getAllComments;
+const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, commentId } = req.params;
+    try {
+        const recipe = yield recipeModel_1.default.findById(id);
+        if (!recipe) {
+            return res.status(404).json({ msg: "Recipe not found" });
+        }
+        const commentIndex = recipe.comments.findIndex((comment) => comment.id === commentId);
+        if (commentIndex === -1) {
+            return res.status(404).json({ msg: "Comment not found" });
+        }
+        recipe.comments.splice(commentIndex, 1);
+        yield recipe.save();
+        res.status(200).json({ recipe });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.deleteComment = deleteComment;

@@ -8,13 +8,14 @@ interface CommentsProps {
 
 const CommentsList = ({ comments }: CommentsProps) => {
   return (
-    <div className="max-h-[600px] overflow-y-auto">
-      {comments &&
-        comments.length !== 0 &&
-        comments.map((comment) => (
+    <div className="md:max-h-[500px] w-full mt-10 py-2  md:w-1/2 md:overflow-y-auto space-y-4">
+      {comments?.length !== 0 &&
+        comments?.map((comment) => (
           <CommentsItem key={comment._id} commentData={comment} />
         ))}
-      {comments?.length === 0 && <p>No reviews yet.</p>}
+      {comments?.length === 0 && (
+        <p className="text-center dark:text-white">No reviews yet.</p>
+      )}
     </div>
   );
 };

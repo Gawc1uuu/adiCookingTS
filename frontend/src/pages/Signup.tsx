@@ -39,21 +39,21 @@ const Signup = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
                   type="text"
-                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6 dark:bg-gray-500 dark:text-white dark:border-2 dark:placeholder:text-white"
                   placeholder="Please Enter Your Username"
                 />
                 <input
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   type="email"
-                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6 dark:bg-gray-500 dark:text-white dark:border-2 dark:placeholder:text-white"
                   placeholder="Please Enter Your Email"
                 />
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   type="password"
-                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6 dark:bg-gray-500 dark:text-white dark:border-2 dark:placeholder:text-white"
                   placeholder="Please Enter Your Password"
                 />
                 {!isLoading && (

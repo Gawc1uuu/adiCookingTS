@@ -43,8 +43,10 @@ mongoose_1.default
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.on("addComment", (data) => {
-        console.log(data);
         socket.emit("newComment", data);
+    });
+    socket.on("deleteComment", (data) => {
+        socket.emit("deletedComment", data);
     });
     socket.on("disconnect", () => {
         console.log("User disconnected", socket.id);

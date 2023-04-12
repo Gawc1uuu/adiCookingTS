@@ -16,6 +16,10 @@ const Navbar = () => {
   };
   const closeMenuHandler = () => {
     setOpen(false);
+  };
+
+  const logoutHandler = () => {
+    setOpen(false);
     logout();
   };
 
@@ -34,7 +38,7 @@ const Navbar = () => {
           <DarkModeToggle />
           {/* normal menu */}
           <div className="items-center space-x-12 hidden lg:flex">
-            <Link onClick={closeMenuHandler} to="/" className="hover:underline">
+            <Link to="/" className="hover:underline">
               Home
             </Link>
             {!state.user && (
@@ -107,7 +111,7 @@ const Navbar = () => {
             {state.user && (
               <Link to="/login">
                 <button
-                  onClick={closeMenuHandler}
+                  onClick={logoutHandler}
                   className="bg-[#b9b9b9] px-6 py-2 rounded-full hover:bg-opacity-90 text-white w-full dark:bg-violet-700 dark:hover:bg-violet-600"
                 >
                   Logout

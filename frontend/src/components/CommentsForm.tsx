@@ -1,21 +1,20 @@
-import { FormEvent, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { FormEvent, useState } from "react";
+
 import ReactStars from "react-stars";
 import useComment from "../hooks/useComment";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { io } from "socket.io-client";
+import { socket } from "../App";
 import { v4 } from "uuid";
 
 const CommentsForm = () => {
-  const { id } = useParams();
   const { state } = useAuthContext();
-  const { addComment } = useComment();
+  const { addComment, error, isLoading } = useComment();
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
+  const [isLoggedIn, setIsLoggedIn] = useState("");
   const ratingChanged = (newRating: any) => {
     setRating(newRating);
   };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const newComment = {
@@ -28,8 +27,13 @@ const CommentsForm = () => {
       },
       createdAt: new Date(),
     };
-
-    // await addComment(newComment);
+    if (!state.user) {
+      setIsLoggedIn("You must be logged in to add comments!");
+      return;
+    }
+    await addComment(newComment);
+    socket.emit("addComment", newComment);
+    setComment("");
   };
 
   return (
@@ -59,12 +63,15 @@ const CommentsForm = () => {
         />
         <div>
           <button
+            disabled={isLoading}
             type="submit"
             className="text-white w-full bg-navpink rounded py-2"
           >
             Add comment
           </button>
         </div>
+        {isLoggedIn.length !== 0 && <p className="error">{isLoggedIn}</p>}
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );

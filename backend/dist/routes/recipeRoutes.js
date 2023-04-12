@@ -18,4 +18,6 @@ router.patch("/:id", requireAuth_1.default, recipeControllers_1.updateRecipe);
 router.post("/:id/comments", requireAuth_1.default, recipeControllers_1.createComment);
 // get comments route
 router.get("/:id/comments", recipeControllers_1.getAllComments);
+// delete comment
+router.delete("/:id/comments/:commentId", recipeControllers_1.deleteComment);
 exports.default = router;

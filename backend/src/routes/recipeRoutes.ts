@@ -7,6 +7,7 @@ import {
   updateRecipe,
   createComment,
   getAllComments,
+  deleteComment,
 } from "../controllers/recipeControllers";
 import authMiddleware from "../middleware/requireAuth";
 
@@ -29,5 +30,7 @@ router.patch("/:id", authMiddleware, updateRecipe);
 router.post("/:id/comments", authMiddleware, createComment);
 // get comments route
 router.get("/:id/comments", getAllComments);
+// delete comment
+router.delete("/:id/comments/:commentId", deleteComment);
 
 export default router;

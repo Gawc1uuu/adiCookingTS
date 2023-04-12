@@ -4,37 +4,55 @@ import axios, { AxiosError } from "axios";
 import CommentsList from "./CommentsList";
 import CommentsForm from "./CommentsForm";
 import { IComment } from "../interfaces/recipe";
-import { io } from "socket.io-client";
+import { socket } from "../App";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Comments = () => {
+  const { state } = useAuthContext();
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+
   const [comments, setComments] = useState<IComment[]>([]);
 
   useEffect(() => {
-    setIsLoading(true);
     const getAllComments = async () => {
       try {
         const res = await axios.get(
           `http://localhost:4000/api/recipes/${id}/comments`
         );
 
-        setIsLoading(false);
         setComments(res.data);
       } catch (err) {
-        setIsLoading(false);
         console.log((err as AxiosError).response?.data);
       }
     };
 
+    socket.off("newComment");
+    socket.on("newComment", (data) => {
+      console.log(data);
+      setComments((prevState) => [...prevState, data]);
+    });
+
+    socket.on("deletedComment", (deletedCommentId) => {
+      setComments((prevState) =>
+        prevState.filter((comment) => comment._id !== deletedCommentId)
+      );
+    });
+
     getAllComments();
-  }, []);
+  }, [id]);
 
   return (
-    <div className="container my-10 flex flex-col items-center justify-between max-w-4xl mx-auto md:flex-row max-h-[600px] overflow-y-auto">
+    <div
+      className="container my-32  flex flex-col-reverse items-center justify-between max-w-4xl mx-auto md:space-y-0 md:items-start
+     md:flex-row md:my-0"
+    >
       <CommentsList comments={comments} />
-      <CommentsForm />
+      {state.user && <CommentsForm />}
+      {!state.user && (
+        <p className="text-gray-600  dark:text-white">
+          Log in to leave a review!
+        </p>
+      )}
     </div>
   );
 };

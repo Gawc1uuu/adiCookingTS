@@ -1,11 +1,15 @@
 import { useEffect, useContext, useState } from "react";
-import axios, { AxiosError } from "axios";
 import { Link } from "react-router-dom";
-import plus from "../assets/plus.png";
-import { RecipesContext } from "../context/RecipesContext";
+// axios
+import axios, { AxiosError } from "axios";
+// components
 import RecipesList from "../components/RecipesList";
 import PaginationButtons from "../components/PaginationButtons";
 import ClipLoader from "react-spinners/ClipLoader";
+// context
+import { RecipesContext } from "../context/RecipesContext";
+// assets
+import plus from "../assets/plus.png";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);

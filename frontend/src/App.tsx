@@ -7,6 +7,9 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { io } from "socket.io-client";
+
+export const socket = io("http://localhost:4000");
 
 function App() {
   const { state: AuthState } = useAuthContext();

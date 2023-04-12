@@ -2,6 +2,7 @@ import mongoose, { isValidObjectId } from "mongoose";
 import express, { Request, Response } from "express";
 import cloudinaryInstance from "../utils/cloudinary";
 import Recipe from "../models/recipeModel";
+import { Types } from "mongoose";
 
 export interface AuthenticatedRequest extends Request {
   user?: any;
@@ -84,6 +85,16 @@ const deleteRecipe = async (req: AuthenticatedRequest, res: Response) => {
     return res.status(404).json({ error: "Id not valid" });
   }
 
+  const deleteImage = (publicId: string) => {
+    cloudinaryInstance.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        console.log("Error deleting image from Cloudinary", error);
+      } else {
+        console.log("Image deleted from Cloudinary", result);
+      }
+    });
+  };
+
   const recipe = await Recipe.findOneAndDelete({ _id: id });
   if (!recipe) {
     return res.status(404).json({ error: "No such recipe" });
@@ -94,7 +105,7 @@ const deleteRecipe = async (req: AuthenticatedRequest, res: Response) => {
   //     .status(400)
   //     .json({ error: "Only author can delete his own recipes" });
   // }
-
+  deleteImage(recipe.image?.public_id!);
   return res.status(200).json(recipe);
 };
 //edit recipe
@@ -157,6 +168,33 @@ const getAllComments = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+const deleteComment = async (req: Request, res: Response) => {
+  const { id, commentId } = req.params;
+
+  try {
+    const recipe = await Recipe.findById(id);
+
+    if (!recipe) {
+      return res.status(404).json({ msg: "Recipe not found" });
+    }
+
+    const commentIndex = recipe.comments.findIndex(
+      (comment) => comment.id === commentId
+    );
+
+    if (commentIndex === -1) {
+      return res.status(404).json({ msg: "Comment not found" });
+    }
+
+    recipe.comments.splice(commentIndex, 1);
+    await recipe.save();
+
+    res.status(200).json({ recipe });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export {
   createRecipe,
@@ -166,4 +204,5 @@ export {
   updateRecipe,
   createComment,
   getAllComments,
+  deleteComment,
 };
