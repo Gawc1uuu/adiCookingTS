@@ -33,7 +33,7 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
 
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/recipes/${data._id}`,
+        `https://adicooking-api.onrender.com/api/recipes/${data._id}`,
         {
           headers: {
             Authorization: `Bearer ${AuthState.user?.token}`,
