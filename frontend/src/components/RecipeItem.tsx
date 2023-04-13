@@ -18,6 +18,9 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
 
   function calculateAverageRating(data: recipe): number {
     const { comments } = data;
+    if (comments.length === 0) {
+      return 0;
+    }
     const sum = comments.reduce((acc, comment) => acc + comment.rating, 0);
     const average = sum / comments.length;
     return average;
