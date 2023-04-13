@@ -21,7 +21,7 @@ const Login = () => {
       <div className="container max-w-5xl mx-auto flex min-h-screen items-center justify-center">
         <div className="flex justify-center max-w-4xl">
           {/* form */}
-          <div className="flex flex-col mx-4 text-left p-6 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
+          <div className="flex flex-col mx-4 text-left px-6 py-12 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
             <div className="space-y-6">
               <h2 className="text-4xl font-mono font-bold text-gray-700 dark:text-white">
                 Login
@@ -49,7 +49,7 @@ const Login = () => {
                 {!isLoading && (
                   <button
                     disabled={isLoading}
-                    className="bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150"
+                    className="bg-blue-400 px-14 py-4 mt-8 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150"
                   >
                     Login
                   </button>
@@ -57,7 +57,7 @@ const Login = () => {
                 {isLoading && (
                   <button
                     disabled={isLoading}
-                    className="flex justify-center items-center bg-blue-400 px-14 py-4 mt-3 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150 bg-opacity-80"
+                    className="flex justify-center items-center bg-blue-400 px-14 py-4 mt-8 text-white rounded hover:-translate-y-0.5 w-full hover:shadow-sm transition duration-150 bg-opacity-80"
                   >
                     <ClipLoader
                       color={"white"}
