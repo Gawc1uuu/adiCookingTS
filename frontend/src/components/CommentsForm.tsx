@@ -37,7 +37,7 @@ const CommentsForm = () => {
   };
 
   return (
-    <div>
+    <div className="container mx-auto md:w-1/2">
       <form onSubmit={handleSubmit}>
         <div>
           <label className="text-gray-700 dark:text-white">
@@ -59,7 +59,7 @@ const CommentsForm = () => {
           id="comment"
           cols={30}
           rows={3}
-          className="dark:text-white dark:bg-gray-500 px-2 py-1 focus:outline-none"
+          className="w-full dark:text-white dark:bg-gray-500 px-2 py-1 focus:outline-none "
         />
         <div>
           <button

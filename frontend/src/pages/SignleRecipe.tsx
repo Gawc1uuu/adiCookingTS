@@ -30,7 +30,7 @@ const SignleRecipe = () => {
   }, [id]);
 
   return (
-    <div className="mx-2 my-16 min-h-screen">
+    <div className="mx-6 my-16 min-h-screen">
       {isLoading && (
         <div className="text-center min-h-screen flex justify-center items-center">
           <ClipLoader
@@ -75,7 +75,7 @@ const SignleRecipe = () => {
                 <h4 className="text-pink-300 text-xl font-semibold">
                   Sposób przygotowania:
                 </h4>
-                <p className="">{recipe?.method}</p>
+                <p>{recipe?.method}</p>
               </div>
             </div>
           </div>

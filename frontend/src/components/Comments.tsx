@@ -44,7 +44,7 @@ const Comments = () => {
   return (
     <div
       className="container my-32  flex flex-col-reverse items-center justify-between max-w-4xl mx-auto md:space-y-0 md:items-start
-     md:flex-row md:my-0"
+     md:flex-row md:my-0 md:space-x-10"
     >
       <CommentsList comments={comments} />
       {state.user && <CommentsForm />}
