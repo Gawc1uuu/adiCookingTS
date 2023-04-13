@@ -26,7 +26,9 @@ const PaginationButton = ({ onChangePage }: PaginationButtonsProps) => {
         className="bg-white text-gray-800 rounded-r-md py-2 border-l border-navpink hover:bg-navpink hover:text-white px-3 dark:bg-gray-500 dark:text-white dark:hover:bg-white dark:hover:text-gray-700 dark:hover:cursor-pointer disabled:opacity-50 disabled:cursor-default"
         onClick={onChangePage.handleNextPage}
         disabled={
-          onChangePage.totalPages === 0 || onChangePage.totalPages === 1
+          onChangePage.totalPages === 0 ||
+          onChangePage.totalPages === 1 ||
+          onChangePage.totalPages === onChangePage.currentPage
         }
       >
         Next
