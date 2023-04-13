@@ -21,7 +21,7 @@ const Login = () => {
       <div className="container max-w-5xl mx-auto flex min-h-screen items-center justify-center">
         <div className="flex justify-center max-w-4xl">
           {/* form */}
-          <div className="flex flex-col mx-4 text-left p-12 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
+          <div className="flex flex-col mx-4 text-left p-6 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
             <div className="space-y-6">
               <h2 className="text-4xl font-mono font-bold text-gray-700 dark:text-white">
                 Login
@@ -36,14 +36,14 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   type="email"
-                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6 dark:bg-gray-500 dark:text-white dark:border-2 dark:placeholder:text-white"
                   placeholder="Please Enter Your Email"
                 />
                 <input
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   type="password"
-                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6"
+                  className="border border-gray-400 rounded-lg p-6 py-4 focus:outline-none placeholder:font-thin block w-full mt-6 dark:bg-gray-500 dark:text-white dark:border-2 dark:placeholder:text-white"
                   placeholder="Please Enter Your Password"
                 />
                 {!isLoading && (

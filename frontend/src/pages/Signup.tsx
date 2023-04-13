@@ -24,7 +24,7 @@ const Signup = () => {
       <div className="container max-w-5xl mx-auto flex min-h-screen items-center justify-center">
         <div className="flex justify-center max-w-4xl">
           {/* form */}
-          <div className="flex flex-col mx-4 text-left p-12 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
+          <div className="flex flex-col mx-4 text-left p-6 bg-white rounded-xl  md:rounded-r-none md:mx-0 dark:bg-gray-500">
             <div className="space-y-6">
               <h2 className="text-4xl font-mono font-bold text-gray-700 dark:text-white">
                 Sign up
