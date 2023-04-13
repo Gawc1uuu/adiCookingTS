@@ -38,7 +38,7 @@ const CommentsForm = () => {
 
   return (
     <div className="container mx-auto md:w-1/2">
-      <form onSubmit={handleSubmit}>
+      <form className="max-w-[90%] mx-auto md:w-full" onSubmit={handleSubmit}>
         <div>
           <label className="text-gray-700 dark:text-white">
             Leave a review:
