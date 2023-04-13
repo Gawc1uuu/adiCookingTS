@@ -36,7 +36,7 @@ const io = new Server(server, {
 mongoose.set("strictQuery", false);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/recipes")
+  .connect(process.env.MONGO_URI?.toString() ?? "")
   .then(() =>
     server.listen(4000, () => {
       console.log("Conntected to database and listening on port 4000");

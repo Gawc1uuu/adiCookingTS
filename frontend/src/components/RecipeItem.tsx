@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { useContext } from "react";
 import { RecipesContext } from "../context/RecipesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import ReactStars from "react-stars";
 
 interface RecipeItemProps {
   data: recipe;
@@ -14,6 +15,13 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
   const { state: AuthState } = useAuthContext();
   const navigate = useNavigate();
   const { dispatch } = useContext(RecipesContext);
+
+  function calculateAverageRating(data: recipe): number {
+    const { comments } = data;
+    const sum = comments.reduce((acc, comment) => acc + comment.rating, 0);
+    const average = sum / comments.length;
+    return average;
+  }
 
   const deleteHandler = async (e: React.MouseEvent) => {
     if (!AuthState.user) {
@@ -83,6 +91,20 @@ const RecipeItem = ({ data }: RecipeItemProps) => {
           />
         </div>
       )}
+      <div className="flex items-center justify-center absolute bottom-1 left-2">
+        <span className="text-gray-700 dark:text-gray-200">
+          {calculateAverageRating(data).toFixed(1)}/5
+        </span>
+        <span>
+          <ReactStars
+            value={1}
+            count={1}
+            size={26}
+            color2={"#ffd700"}
+            edit={false}
+          />
+        </span>
+      </div>
     </div>
   );
 };

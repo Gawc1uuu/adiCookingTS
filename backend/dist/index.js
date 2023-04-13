@@ -2,6 +2,7 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
@@ -33,7 +34,7 @@ const io = new socket_io_1.Server(server, {
 // connecting to db
 mongoose_1.default.set("strictQuery", false);
 mongoose_1.default
-    .connect("mongodb://127.0.0.1:27017/recipes")
+    .connect((_b = (_a = process.env.MONGO_URI) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "")
     .then(() => server.listen(4000, () => {
     console.log("Conntected to database and listening on port 4000");
 }))
