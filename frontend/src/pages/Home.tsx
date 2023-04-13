@@ -22,7 +22,7 @@ const Home = () => {
       try {
         setIsLoading(true);
         const res = await axios.get(
-          `http://localhost:4000/api/recipes?page=${page}&limit=6`
+          `https://adicooking-api.onrender.com/api/recipes?page=${page}&limit=6`
         );
 
         setCurrentPage(res.data.currentPage);

@@ -19,7 +19,7 @@ const useComment = () => {
 
     axios
       .post(
-        `http://localhost:4000/api/recipes/${id}/comments`,
+        `https://adicooking-api.onrender.com/api/recipes/${id}/comments`,
         { ...comment },
         {
           headers: {

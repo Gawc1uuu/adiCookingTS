@@ -19,7 +19,7 @@ const CommentsItem = ({ commentData }: CommentItemProps) => {
   const deleteHandler = async () => {
     axios
       .delete(
-        `http://localhost:4000/api/recipes/${id}/comments/${commentData?._id}`
+        `https://adicooking-api.onrender.com/api/recipes/${id}/comments/${commentData?._id}`
       )
       .then((res) => {
         console.log(res);

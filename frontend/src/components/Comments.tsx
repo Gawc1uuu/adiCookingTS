@@ -17,7 +17,7 @@ const Comments = () => {
     const getAllComments = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/api/recipes/${id}/comments`
+          `https://adicooking-api.onrender.com/api/recipes/${id}/comments`
         );
 
         setComments(res.data);

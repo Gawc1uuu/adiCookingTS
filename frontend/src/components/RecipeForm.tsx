@@ -69,7 +69,7 @@ const RecipeForm = () => {
     console.log(newRecipe);
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/recipes",
+        "https://adicooking-api.onrender.com/api/recipes",
         {
           ...newRecipe,
         },

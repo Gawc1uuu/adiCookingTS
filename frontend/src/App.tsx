@@ -9,7 +9,7 @@ import Signup from "./pages/Signup";
 import { useAuthContext } from "./hooks/useAuthContext";
 import { io } from "socket.io-client";
 
-export const socket = io("http://localhost:4000");
+export const socket = io("https://adicooking-api.onrender.com");
 
 function App() {
   const { state: AuthState } = useAuthContext();

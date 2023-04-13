@@ -14,7 +14,7 @@ const SignleRecipe = () => {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/recipes/${id}`
+          `https://adicooking-api.onrender.com/api/recipes/${id}`
         );
         console.log("Success", response.data);
         setRecipe(response.data);

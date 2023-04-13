@@ -12,7 +12,7 @@ export const useSignup = () => {
     setError(false);
 
     axios
-      .post("http://localhost:4000/api/user/signup", {
+      .post("https://adicooking-api.onrender.com/api/user/signup", {
         username,
         email,
         password,
