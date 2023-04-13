@@ -27,7 +27,7 @@ app.get("*", (req, res) => {
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://adicooking.onrender.com",
         methods: ["GET", "POST"],
     },
 });
