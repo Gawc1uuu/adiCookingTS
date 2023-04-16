@@ -57,7 +57,7 @@ const Home = () => {
         </p>
       )}
       {isLoading && (
-        <div className="text-center min-h-screen flex justify-center items-center">
+        <div className="text-center min-h-screen flex flex-col justify-center items-center">
           <ClipLoader
             color={"#c96382"}
             loading={isLoading}
@@ -65,6 +65,9 @@ const Home = () => {
             aria-label="Loading Spinner"
             data-testid="loader"
           />
+          <p className="text-gray-500 dark:text-gray-300">
+            It might take a moment due to slow hosting...
+          </p>
         </div>
       )}
       {state.recipes && state.recipes?.length !== 0 && (
