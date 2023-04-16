@@ -24,3 +24,5 @@ Open integrated terminal for a backend and run 'npm install'.
 After its done go to backend/src folder and run 'npm run serve' to run a server.
 
 It will be deployed soon!
+
+https://adicooking.onrender.com/
