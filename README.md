@@ -7,6 +7,7 @@ Tech Stack:
 -Socket IO
 -React
 -TailwindCSS
+-Figma for logo
 
 Its a simple Recipe app where you can share, rate and review recipes with users.
 
